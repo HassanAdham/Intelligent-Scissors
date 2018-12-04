@@ -8,3 +8,13 @@ F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\bin\Debu
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.pdb
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.exe
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.pdb
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.exe.config
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.exe
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.pdb
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csprojResolveAssemblyReference.cache
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image_Editor.Form1.resources
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image_Editor.Properties.Resources.resources
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.GenerateResource.cache
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.CoreCompileInputs.cache
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.exe
+E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.pdb

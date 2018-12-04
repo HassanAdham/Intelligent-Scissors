@@ -7,6 +7,11 @@ using System.Drawing.Imaging;
 
 namespace Image_Editor
 {
+    public struct Vector2D
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+    }
     public struct RGBPixel
     {
         public byte red, green, blue;
@@ -78,6 +83,97 @@ namespace Image_Editor
 
         }
 
+        /// <summary>
+        /// Calculate edge energy between
+        ///     1. the given pixel and its right one (X)
+        ///     2. the given pixel and its bottom one (Y)
+        /// </summary>
+        /// <param name="x">pixel x-coordinate</param>
+        /// <param name="y">pixel y-coordinate</param>
+        /// <param name="ImageMatrix">colored image matrix</param>
+        /// <returns>edge energy with the right pixel (X) and with the bottom pixel (Y)</returns>
+        public static Vector2D CalculatePixelEnergies(int x, int y, RGBPixel[,] ImageMatrix)
+        {
+            if (ImageMatrix == null) throw new Exception("image is not set!");
+
+            Vector2D gradient = CalculateGradientAtPixel(x, y, ImageMatrix);
+
+            double gradientMagnitude = Math.Sqrt(gradient.X * gradient.X + gradient.Y * gradient.Y);
+            double edgeAngle = Math.Atan2(gradient.Y, gradient.X);
+            double rotatedEdgeAngle = edgeAngle + Math.PI / 2.0;
+
+            Vector2D energy = new Vector2D();
+            energy.X = Math.Abs(gradientMagnitude * Math.Cos(rotatedEdgeAngle));
+            energy.Y = Math.Abs(gradientMagnitude * Math.Sin(rotatedEdgeAngle));
+
+            return energy;
+        }
+        /// <summary>
+        /// Calculate Gradient vector between the given pixel and its right and bottom ones
+        /// </summary>
+        /// <param name="x">pixel x-coordinate</param>
+        /// <param name="y">pixel y-coordinate</param>
+        /// <param name="ImageMatrix">colored image matrix</param>
+        /// <returns></returns>
+        private static Vector2D CalculateGradientAtPixel(int x, int y, RGBPixel[,] ImageMatrix)
+        {
+            Vector2D gradient = new Vector2D();
+
+            RGBPixel mainPixel = ImageMatrix[y, x];
+            double pixelGrayVal = 0.21 * mainPixel.red + 0.72 * mainPixel.green + 0.07 * mainPixel.blue;
+
+            if (y == GetHeight(ImageMatrix) - 1)
+            {
+                //boundary pixel.
+                for (int i = 0; i < 3; i++)
+                {
+                    gradient.Y = 0;
+                }
+            }
+            else
+            {
+                RGBPixel downPixel = ImageMatrix[y + 1, x];
+                double downPixelGrayVal = 0.21 * downPixel.red + 0.72 * downPixel.green + 0.07 * downPixel.blue;
+
+                gradient.Y = pixelGrayVal - downPixelGrayVal;
+            }
+
+            if (x == GetWidth(ImageMatrix) - 1)
+            {
+                //boundary pixel.
+                gradient.X = 0;
+
+            }
+            else
+            {
+                RGBPixel rightPixel = ImageMatrix[y, x + 1];
+                double rightPixelGrayVal = 0.21 * rightPixel.red + 0.72 * rightPixel.green + 0.07 * rightPixel.blue;
+
+                gradient.X = pixelGrayVal - rightPixelGrayVal;
+            }
+
+
+            return gradient;
+        }
+        /// <summary>
+        /// Get the height of the image 
+        /// </summary>
+        /// <param name="ImageMatrix">2D array that contains the image</param>
+        /// <returns>Image Height</returns>
+        public static int GetHeight(RGBPixel[,] ImageMatrix)
+        {
+            return ImageMatrix.GetLength(0);
+        }
+
+        /// <summary>
+        /// Get the width of the image 
+        /// </summary>
+        /// <param name="ImageMatrix">2D array that contains the image</param>
+        /// <returns>Image Width</returns>
+        public static int GetWidth(RGBPixel[,] ImageMatrix)
+        {
+            return ImageMatrix.GetLength(1);
+        }
 
         public static unsafe void DisplayImage(RGBPixel[,] ImageMatrix, PictureBox PicBox)
         {
