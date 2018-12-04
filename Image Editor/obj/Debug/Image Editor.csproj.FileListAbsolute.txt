@@ -3,3 +3,8 @@ F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debu
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image_Editor.Properties.Resources.resources
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.GenerateResource.cache
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.CoreCompileInputs.cache
+F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.exe.config
+F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.exe
+F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.pdb
+F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.exe
+F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.pdb

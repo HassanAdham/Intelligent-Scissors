@@ -17,7 +17,7 @@ namespace Image_Editor
     }
     public class ImageOperations
     {
-        public static RGBPixel[,] OpenImage(string ImagePath)
+        public static unsafe RGBPixel[,] OpenImage(string ImagePath)
         {
             Bitmap original_bm = new Bitmap(ImagePath);
             int Height = original_bm.Height;
@@ -25,7 +25,7 @@ namespace Image_Editor
 
             RGBPixel[,] Buffer = new RGBPixel[Height, Width];
 
-            unsafe
+            
             {
                 BitmapData bmd = original_bm.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.ReadWrite, original_bm.PixelFormat);
                 int x, y;
@@ -78,7 +78,8 @@ namespace Image_Editor
 
         }
 
-        public static void DisplayImage(RGBPixel[,] ImageMatrix, PictureBox PicBox)
+
+        public static unsafe void DisplayImage(RGBPixel[,] ImageMatrix, PictureBox PicBox)
         {
             // Create Image:
             //==============
@@ -87,7 +88,6 @@ namespace Image_Editor
 
             Bitmap ImageBMP = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
 
-            unsafe
             {
                 BitmapData bmd = ImageBMP.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.ReadWrite, ImageBMP.PixelFormat);
                 int nWidth = 0;
