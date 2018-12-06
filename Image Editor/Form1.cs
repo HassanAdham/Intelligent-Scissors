@@ -15,10 +15,11 @@ namespace Image_Editor
         public Form1()
         {
             InitializeComponent();
+            pointNumber = 0;
         }
 
         RGBPixel[,] ImageMatrix;
-        int pointNumber = 0;
+        int pointNumber;
         Point startPoint;
         Point freePoint;
 
@@ -31,6 +32,8 @@ namespace Image_Editor
                 string OpenedFilePath = openFileDialog1.FileName;
                 ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
                 ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
+                pictureBox1.Controls.Clear();
+                pointNumber = 0;
             }
         }
 
@@ -38,25 +41,25 @@ namespace Image_Editor
         {
             if (checkBox1.Checked==true)
             {
-                pictureBox1_CreateDash(e.Location.X,e.Location.Y);
+                pictureBox1_CreatDot(e.Location.X,e.Location.Y);
                 if (pointNumber == 0)
                 {
-                     pointNumber++;
-                     startPoint = new Point(e.Location.X,e.Location.Y);
-                }
-                else if(pointNumber == 1)
-                {
                     pointNumber++;
+                    startPoint = new Point(e.Location.X,e.Location.Y);
                     freePoint = new Point(e.Location.X, e.Location.Y);
-                    drawLine(startPoint, freePoint);
-                }
-                else
-                {
-                    startPoint = freePoint;
-                    freePoint = new Point(e.Location.X, e.Location.Y);
-                    drawLine(startPoint, freePoint);
-                }       
+                    freePoint = startPoint;
+                }      
             }     
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(pointNumber >=1)
+            {
+                startPoint = freePoint;
+                freePoint = new Point(e.Location.X, e.Location.Y);
+                drawLine(startPoint, freePoint, Color.Red, 1);
+            }
         }
 
         private void checkBox1_EnabledChanged(object sender, EventArgs e)
@@ -67,10 +70,9 @@ namespace Image_Editor
                 checkBox1.Text = "Off";
         }
 
-        private void pictureBox1_CreateDash(int x, int y)
+        private void pictureBox1_CreatDot(int x, int y)
         {
             Label l = new Label();
-            l.Text = "-";
             l.Size = new Size(3, 3);
             l.BackColor = Color.Blue;
             l.Location = new Point(x, y);
@@ -78,13 +80,16 @@ namespace Image_Editor
             pictureBox1.Controls.Add(l);
         }
 
-        private void drawLine(Point p1, Point p2)
+        private void drawLine(Point p1, Point p2, Color C, int S)
         {
             Graphics g = pictureBox1.CreateGraphics();
             Rectangle r = new Rectangle();
             PaintEventArgs p = new PaintEventArgs(g,r);
-            Pen blackPen = new Pen(Color.Black, 3);
-            p.Graphics.DrawLine(blackPen, p1,p2);
+            Pen blackPen = new Pen(C, S);
+            blackPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            p.Graphics.DrawLine(blackPen, p1, p2);
         }
     }
+
+
 }
