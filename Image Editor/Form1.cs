@@ -16,12 +16,17 @@ namespace Image_Editor
         {
             InitializeComponent();
             pointNumber = 0;
+            is_menuStripMouseDown = false;
+            is_maximized = true;
         }
 
         RGBPixel[,] ImageMatrix;
         int pointNumber;
         Point startPoint;
         Point freePoint;
+        bool is_menuStripMouseDown;
+        Point start;
+        bool is_maximized;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -90,21 +95,6 @@ namespace Image_Editor
             p.Graphics.DrawLine(blackPen, p1, p2);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void menuStrip1_ItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -119,29 +109,48 @@ namespace Image_Editor
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void filesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void menuStrip1_MouseDown(object sender, MouseEventArgs e)
         {
-
+            is_menuStripMouseDown = true;
+            start = new Point(e.X, e.Y);
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void menuStrip1_MouseMove(object sender, MouseEventArgs e)
         {
+            if(is_menuStripMouseDown)
+            {
+                Point p = PointToScreen(e.Location);
+                this.Location = new Point(p.X-start.X, p.Y-start.Y);
+            }
+        }
 
+        private void menuStrip1_MouseUp(object sender, MouseEventArgs e)
+        {
+            is_menuStripMouseDown = false;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (is_maximized == false)
+            {
+                this.WindowState = FormWindowState.Maximized;
+                is_maximized = true;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+                is_maximized = false;
+            }
         }
     }
 
