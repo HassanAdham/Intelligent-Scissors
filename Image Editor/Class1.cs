@@ -7,6 +7,11 @@ using System.Drawing.Imaging;
 
 namespace Image_Editor
 {
+    public struct Edge
+    {
+        public int p;
+        public double w;
+    }
     public struct Vector2D
     {
         public double X { get; set; }
@@ -22,6 +27,40 @@ namespace Image_Editor
     }
     public class ImageOperations
     {
+        public static List<Edge>[] ImageGraph;
+
+        public static void BuildGraph(RGBPixel[,] image)
+        {
+            int width = GetWidth(image);
+            int height = GetHeight(image);
+            Vector2D temp = new Vector2D();
+            ImageGraph = new List<Edge>[width * height];
+            for (int k = 0; k < width * height; k++)
+            {
+                ImageGraph[k] = new List<Edge>();
+            }
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width - 1; j++)
+                {
+                    temp = CalculatePixelEnergies(j, i, image);
+                    Edge e = new Edge();
+                    e.p = i * width + j + 1;
+                    e.w = 1 / temp.X;
+                    ImageGraph[i * width + j].Add(e);
+                    e.p = (i + 1) * width + j;
+                    e.w = 1 / temp.Y;
+                    ImageGraph[i * width + j].Add(e);
+                    e.p = i * width + j;
+                    e.w = 1 / temp.X;
+                    ImageGraph[i * width + j + 1].Add(e);
+                    e.p = i * width + j;
+                    e.w = 1 / temp.Y;
+                    ImageGraph[(i + 1) * width + j].Add(e);
+
+                }
+            }
+        }
         public static unsafe RGBPixel[,] OpenImage(string ImagePath)
         {
             Bitmap original_bm = new Bitmap(ImagePath);
