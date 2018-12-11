@@ -101,7 +101,15 @@ namespace Image_Editor
             blackPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             p.Graphics.DrawLine(blackPen, p1, p2);
         }
-
+        private void drawLine(Point [] arr, Color C, int S)
+        {
+            Graphics g = pictureBox1.CreateGraphics();
+            Rectangle r = new Rectangle();
+            Pen pen = new Pen(C, S);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            PaintEventArgs p = new PaintEventArgs(g, r);
+            p.Graphics.DrawCurve(pen, arr);
+        }
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -158,26 +166,6 @@ namespace Image_Editor
                 this.WindowState = FormWindowState.Normal;
                 is_maximized = false;
             }
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 
