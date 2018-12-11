@@ -85,7 +85,7 @@ namespace Image_Editor
             }
 
         }
-        static int[] shortestReach(int n, List<Edge>[] edges, int s)
+       public static int[] shortestReach(int n, List<Edge>[] edges, int s)
         {
             //List<List<pair>> l = new List<List<pair>>();
             //for (int i = 0; i <= n; i++)
@@ -118,6 +118,31 @@ namespace Image_Editor
                 }
             }
             return arr;
+        }
+        public static int[] line(int s, int d, int[] arr, List<Edge>[] edges)
+        {
+            List<int> l = new List<int>();
+            double p = arr[d];
+            while (d != s)
+            {
+                l.Add(d);
+                for (int i = 0; i < edges[d].Count; i++)
+                {
+                    if (arr[d] == arr[edges[d][i].p] + edges[d][i].w)
+                    {
+                        p -= edges[d][i].w;
+                        d = arr[edges[d][i].p];
+                        break;
+                    }
+                }
+            }
+            l.Add(s);
+            int[] a = new int[l.Count];
+            for (int i = 0; i < a.Length; i++)
+            {
+                a[i] = l[i];
+            }
+            return a;
         }
         public static unsafe RGBPixel[,] OpenImage(string ImagePath)
         {

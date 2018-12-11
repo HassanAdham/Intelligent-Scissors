@@ -37,6 +37,7 @@ namespace Image_Editor
                 string OpenedFilePath = openFileDialog1.FileName;
                 ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
                 ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
+                ImageOperations.BuildGraph(ImageMatrix);
                 pictureBox1.Controls.Clear();
                 pointNumber = 0;
             }
@@ -59,7 +60,18 @@ namespace Image_Editor
                 {
                     startPoint = freePoint;
                     freePoint = new Point(e.Location.X, e.Location.Y);
-                    //drawLine(startPoint, freePoint, Color.Red, 1);
+                    int N = ImageOperations.GetWidth(ImageMatrix) * ImageOperations.GetHeight(ImageMatrix);
+                    int S = ImageOperations.GetWidth(ImageMatrix) * startPoint.Y + startPoint.X;
+                    int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
+                    int[] arr= ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
+                    arr = ImageOperations.line(S, d, arr, ImageOperations.ImageGraph);
+                    Point[] points = new Point[arr.Length];
+                    for(int i = 0; i < arr.Length; i++)
+                    {
+                        points[i].X = arr[i] % ImageOperations.GetWidth(ImageMatrix);
+                        points[i].X = arr[i] / ImageOperations.GetWidth(ImageMatrix);
+                    }
+                    drawLine(points, Color.Red, 1);
                 }
             }
         }
