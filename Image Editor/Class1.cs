@@ -39,27 +39,85 @@ namespace Image_Editor
             {
                 ImageGraph[k] = new List<Edge>();
             }
-            for (int i = 0; i < height - 1; i++)
+            for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < width - 1; j++)
+                for (int j = 0; j < width; j++)
                 {
-                    temp = CalculatePixelEnergies(j, i, image);
-                    Edge e = new Edge();
-                    e.p = i * width + j + 1;
-                    e.w = 1 / temp.X;
-                    ImageGraph[i * width + j].Add(e);
-                    e.p = (i + 1) * width + j;
-                    e.w = 1 / temp.Y;
-                    ImageGraph[i * width + j].Add(e);
-                    e.p = i * width + j;
-                    e.w = 1 / temp.X;
-                    ImageGraph[i * width + j + 1].Add(e);
-                    e.p = i * width + j;
-                    e.w = 1 / temp.Y;
-                    ImageGraph[(i + 1) * width + j].Add(e);
+                    if (i != height - 1 && j != width - 1)
+                    {
+                        temp = CalculatePixelEnergies(j, i, image);
+                        Edge e = new Edge();
+                        e.p = i * width + j + 1;
+                        e.w = 1 / temp.X;
+                        ImageGraph[i * width + j].Add(e);
+                        e.p = (i + 1) * width + j;
+                        e.w = 1 / temp.Y;
+                        ImageGraph[i * width + j].Add(e);
+                        e.p = i * width + j;
+                        e.w = 1 / temp.X;
+                        ImageGraph[i * width + j + 1].Add(e);
+                        e.p = i * width + j;
+                        e.w = 1 / temp.Y;
+                        ImageGraph[(i + 1) * width + j].Add(e);
+                    }
+                    else if (i == height - 1 && j != width - 1)
+                    {
+                        Edge e = new Edge();
+                        e.p = i * width + j + 1;
+                        e.w = 1 / temp.X;
+                        ImageGraph[i * width + j].Add(e);
+                        e.p = i * width + j;
+                        e.w = 1 / temp.X;
+                        ImageGraph[i * width + j + 1].Add(e);
+                    }
+                    else if (i != height - 1 && j == width - 1)
+                    {
+                        Edge e = new Edge();
+                        e.p = (i + 1) * width + j;
+                        e.w = 1 / temp.Y;
+                        ImageGraph[i * width + j].Add(e);
+                        e.p = i * width + j;
+                        e.w = 1 / temp.Y;
+                        ImageGraph[(i + 1) * width + j].Add(e);
+                    }
 
                 }
             }
+
+        }
+        static int[] shortestReach(int n, List<Edge>[] edges, int s)
+        {
+            //List<List<pair>> l = new List<List<pair>>();
+            //for (int i = 0; i <= n; i++)
+            //    l.Add(new List<pair>());
+            //for (int f = 0; f < edges.Length; f++)
+            //{
+            //    l[edges[f][0]].Add(new pair(edges[f][2], edges[f][1]));
+            //    l[edges[f][1]].Add(new pair(edges[f][2], edges[f][0]));
+            //}
+            int[] arr = new int[n + 1];
+            for (int i = 0; i <= n; i++)
+            {
+                arr[i] = 1000000000;
+            }
+            heap h = new heap(n);
+            h.add(0, s);
+            while (!h.empty())
+            {
+                pair x = h.getmin();
+                if (arr[x.second] > x.first)
+                {
+                    arr[x.second] = (int)x.first;
+                    for (int i = 0; i < edges[x.second].Count; i++)
+                    {
+                        if (arr[edges[x.second][i].p] > x.first + edges[x.second][i].w)
+                        {
+                            h.add(x.first + edges[x.second][i].w, edges[x.second][i].p);
+                        }
+                    }
+                }
+            }
+            return arr;
         }
         public static unsafe RGBPixel[,] OpenImage(string ImagePath)
         {
@@ -69,7 +127,7 @@ namespace Image_Editor
 
             RGBPixel[,] Buffer = new RGBPixel[Height, Width];
 
-            
+
             {
                 BitmapData bmd = original_bm.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.ReadWrite, original_bm.PixelFormat);
                 int x, y;
@@ -244,6 +302,101 @@ namespace Image_Editor
                 ImageBMP.UnlockBits(bmd);
             }
             PicBox.Image = ImageBMP;
+        }
+    }
+    class heap
+    {
+        public int size, last;
+        private pair[] arr;
+        public heap(int n)
+        {
+            arr = new pair[n];
+            size = n;
+            last = 1;
+        }
+        public void add(double a, int b)
+        {
+            if (last == 0)
+                last++;
+            if (last == size)
+            {
+                Array.Resize(ref arr, arr.Length * 2);
+                size = arr.Length;
+            }
+            arr[last] = new pair(a, b);
+            int i = last;
+            while (i != 1 && arr[i].first < arr[i / 2].first)
+            {
+                pair x = arr[i / 2];
+                arr[i / 2] = arr[i];
+                arr[i] = x;
+                i /= 2;
+            }
+            last++;
+        }
+        public pair getmin()
+        {
+            pair x = arr[1];
+            int i = 1;
+            while (i < last)
+            {
+                if ((i * 2) + 1 < last)
+                {
+                    if (arr[i * 2].first < arr[(i * 2) + 1].first)
+                    {
+                        arr[i] = arr[i * 2];
+                        i *= 2;
+                    }
+                    else
+                    {
+                        arr[i] = arr[(i * 2) + 1];
+                        i *= 2;
+                        i++;
+                    }
+                }
+                else if (i * 2 < last)
+                {
+                    arr[i] = arr[i * 2];
+                    break;
+                }
+                else
+                {
+                    for (; i < last - 1; i++)
+                    {
+                        arr[i] = arr[i + 1];
+                        if (i % 2 == 1)
+                        {
+                            int j = i;
+                            while (j != 1 && arr[j].first < arr[j / 2].first)
+                            {
+                                pair w = arr[j / 2];
+                                arr[j / 2] = arr[j];
+                                arr[j] = w;
+                                j /= 2;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+            last--;
+            return x;
+        }
+        public bool empty()
+        {
+            if (last == 0)
+                return true;
+            return false;
+        }
+    }
+    class pair
+    {
+        public double first;
+        public int second;
+        public pair(double a, int b)
+        {
+            first = a;
+            second = b;
         }
     }
 }

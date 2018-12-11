@@ -44,32 +44,39 @@ namespace Image_Editor
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (checkBox1.Checked==true)
+            if (checkBox1.Checked == true)
             {
-                pictureBox1_CreatDot(e.Location.X,e.Location.Y);
+                pictureBox1_CreatDot(e.Location.X, e.Location.Y);
                 if (pointNumber == 0)
                 {
                     pointNumber++;
-                    startPoint = new Point(e.Location.X,e.Location.Y);
+                    startPoint = new Point(e.Location.X, e.Location.Y);
                     freePoint = new Point(e.Location.X, e.Location.Y);
                     freePoint = startPoint;
-                }      
-            }     
+
+                }
+                else if (pointNumber >= 1)
+                {
+                    startPoint = freePoint;
+                    freePoint = new Point(e.Location.X, e.Location.Y);
+                    //drawLine(startPoint, freePoint, Color.Red, 1);
+                }
+            }
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if(pointNumber >=1)
-            {
-                startPoint = freePoint;
-                freePoint = new Point(e.Location.X, e.Location.Y);
-                drawLine(startPoint, freePoint, Color.Red, 1);
-            }
+            //if(pointNumber >=1)
+            //{
+            //    startPoint = freePoint;
+            //    freePoint = new Point(e.Location.X, e.Location.Y);
+            //    drawLine(startPoint, freePoint, Color.Red, 1);
+            //}
         }
 
         private void checkBox1_EnabledChanged(object sender, EventArgs e)
         {
-            if(checkBox1.Checked)
+            if (checkBox1.Checked)
                 checkBox1.Text = "On";
             else
                 checkBox1.Text = "Off";
@@ -89,7 +96,7 @@ namespace Image_Editor
         {
             Graphics g = pictureBox1.CreateGraphics();
             Rectangle r = new Rectangle();
-            PaintEventArgs p = new PaintEventArgs(g,r);
+            PaintEventArgs p = new PaintEventArgs(g, r);
             Pen blackPen = new Pen(C, S);
             blackPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             p.Graphics.DrawLine(blackPen, p1, p2);
@@ -122,10 +129,10 @@ namespace Image_Editor
 
         private void menuStrip1_MouseMove(object sender, MouseEventArgs e)
         {
-            if(is_menuStripMouseDown)
+            if (is_menuStripMouseDown)
             {
                 Point p = PointToScreen(e.Location);
-                this.Location = new Point(p.X-start.X, p.Y-start.Y);
+                this.Location = new Point(p.X - start.X, p.Y - start.Y);
             }
         }
 
