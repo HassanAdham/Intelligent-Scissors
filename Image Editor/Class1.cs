@@ -99,7 +99,7 @@ namespace Image_Editor
             }
 
         }
-       public static int[] shortestReach(int n, List<Edge>[] edges, int s)
+       public static double[] shortestReach(int n, List<Edge>[] edges, int s)
         {
             //List<List<pair>> l = new List<List<pair>>();
             //for (int i = 0; i <= n; i++)
@@ -109,7 +109,7 @@ namespace Image_Editor
             //    l[edges[f][0]].Add(new pair(edges[f][2], edges[f][1]));
             //    l[edges[f][1]].Add(new pair(edges[f][2], edges[f][0]));
             //}
-            int[] arr = new int[n + 1];
+            double[] arr = new double[n + 1];
             for (int i = 0; i <= n; i++)
             {
                 arr[i] = 1000000000;
@@ -121,7 +121,7 @@ namespace Image_Editor
                 pair x = h.getmin();
                 if (arr[x.second] > x.first)
                 {
-                    arr[x.second] = (int)x.first;
+                    arr[x.second] = (double)x.first;
                     for (int i = 0; i < edges[x.second].Count; i++)
                     {
                         if (arr[edges[x.second][i].p] > x.first + edges[x.second][i].w)
@@ -133,7 +133,7 @@ namespace Image_Editor
             }
             return arr;
         }
-        public static int[] line(int s, int d, int[] arr, List<Edge>[] edges)
+        public static int[] line(int s, int d, double[] arr, List<Edge>[] edges)
         {
             List<int> l = new List<int>();
             double p = arr[d];
@@ -145,7 +145,7 @@ namespace Image_Editor
                     if (arr[d] == arr[edges[d][i].p] + edges[d][i].w)
                     {
                         p -= edges[d][i].w;
-                        d = arr[edges[d][i].p];
+                        d = edges[d][i].p;
                         break;
                     }
                 }

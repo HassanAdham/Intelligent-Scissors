@@ -63,13 +63,13 @@ namespace Image_Editor
                     int N = ImageOperations.GetWidth(ImageMatrix) * ImageOperations.GetHeight(ImageMatrix);
                     int S = ImageOperations.GetWidth(ImageMatrix) * startPoint.Y + startPoint.X;
                     int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
-                    int[] arr= ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
-                    arr = ImageOperations.line(S, d, arr, ImageOperations.ImageGraph);
-                    Point[] points = new Point[arr.Length];
-                    for(int i = 0; i < arr.Length; i++)
+                    double[] arr= ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
+                    int []  arr1 = ImageOperations.line(S, d, arr, ImageOperations.ImageGraph);
+                    Point[] points = new Point[arr1.Length];
+                    for(int i = 0; i < arr1.Length; i++)
                     {
-                        points[i].X = arr[i] % ImageOperations.GetWidth(ImageMatrix);
-                        points[i].X = arr[i] / ImageOperations.GetWidth(ImageMatrix);
+                        points[i].X = arr1[i] % ImageOperations.GetWidth(ImageMatrix);
+                        points[i].X = arr1[i] / ImageOperations.GetWidth(ImageMatrix);
                     }
                     drawLine(points, Color.Red, 1);
                 }
