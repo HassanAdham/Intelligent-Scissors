@@ -131,6 +131,7 @@ namespace Image_Editor
                 string OpenedFilePath = openFileDialog1.FileName;
                 ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
                 ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
+                ImageOperations.BuildGraph(ImageMatrix);
                 pictureBox1.Controls.Clear();
                 pointNumber = 0;
             }
