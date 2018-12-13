@@ -69,7 +69,7 @@ namespace Image_Editor
                     for(int i = 0; i < arr1.Length; i++)
                     {
                         points[i].X = arr1[i] % ImageOperations.GetWidth(ImageMatrix);
-                        points[i].X = arr1[i] / ImageOperations.GetWidth(ImageMatrix);
+                        points[i].Y = arr1[i] / ImageOperations.GetWidth(ImageMatrix);
                     }
                     drawLine(points, Color.Red, 1);
                 }
