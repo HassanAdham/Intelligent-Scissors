@@ -47,7 +47,9 @@ namespace Image_Editor
         {
             if (checkBox1.Checked == true)
             {
-                pictureBox1_CreatDot(e.Location.X, e.Location.Y);
+                pictureBox1_CreateDot(e.Location.X, e.Location.Y);
+
+
                 if (pointNumber == 0)
                 {
                     pointNumber++;
@@ -60,6 +62,7 @@ namespace Image_Editor
                 {
                     startPoint = freePoint;
                     freePoint = new Point(e.Location.X, e.Location.Y);
+
                     int N = ImageOperations.GetWidth(ImageMatrix) * ImageOperations.GetHeight(ImageMatrix);
                     int S = ImageOperations.GetWidth(ImageMatrix) * startPoint.Y + startPoint.X;
                     int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
@@ -71,6 +74,7 @@ namespace Image_Editor
                         points[i].X = arr1[i] % ImageOperations.GetWidth(ImageMatrix);
                         points[i].Y = arr1[i] / ImageOperations.GetWidth(ImageMatrix);
                     }
+                    ImageOperations.outputShortestPath(points, S, startPoint, d, freePoint);
                     drawLine(points, Color.Red, 1);
                 }
             }
@@ -94,7 +98,7 @@ namespace Image_Editor
                 checkBox1.Text = "Off";
         }
 
-        private void pictureBox1_CreatDot(int x, int y)
+        private void pictureBox1_CreateDot(int x, int y)
         {
             Label l = new Label();
             l.Size = new Size(3, 3);

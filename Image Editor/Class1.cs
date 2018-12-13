@@ -118,7 +118,19 @@ namespace Image_Editor
                 }
             }
         }
-       public static double[] shortestReach(int n, List<Edge>[] edges, int s)
+        public static void outputShortestPath(Point[] arr, int source, Point sourcePoint, int destination, Point destintaionPoint)
+        {
+            using (StreamWriter sw = new StreamWriter("shortestPath.txt"))
+            {
+                sw.WriteLine(" The Shortest path from Node  " + source + "at position   " + sourcePoint.X + "  " + sourcePoint.Y);
+                sw.WriteLine(" The Shortest path to Node  " + destination + "at position   " + destintaionPoint.X + "  " + destintaionPoint.Y);
+                for (int i = arr.Length - 1; i >= 0; i--)
+                {
+                    sw.WriteLine("Node  " + arr[i] + " at position x " + arr[i].X + " at position y   " + arr[i].Y);
+                }
+            }
+        }
+        public static double[] shortestReach(int n, List<Edge>[] edges, int s)
         {
             //List<List<pair>> l = new List<List<pair>>();
             //for (int i = 0; i <= n; i++)
