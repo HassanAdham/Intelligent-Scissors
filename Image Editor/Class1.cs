@@ -109,7 +109,10 @@ namespace Image_Editor
                     string s = i + "|edges:";
                     for (int j = 0; j < ImageGraph[i].Count; j++)
                     {
-                        s += "(" + i + "," + ImageGraph[i][j].p + "," + ImageGraph[i][j].w + ")";        
+                        if( ImageGraph[i][j].w==  double.PositiveInfinity)
+                            s += "(" + i + "," + ImageGraph[i][j].p + "," + 1E+16 + ")";
+                        else
+                            s += "(" + i + "," + ImageGraph[i][j].p + "," + ImageGraph[i][j].w + ")";        
                     }
                     writetext.WriteLine(s);
                 }
