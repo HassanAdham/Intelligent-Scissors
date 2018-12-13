@@ -97,7 +97,21 @@ namespace Image_Editor
 
                 }
             }
-
+            output();
+        }
+       private static void output()
+        {
+            for (int i = 0; i < ImageGraph.Length; i++)
+            {
+                for (int j = 0; j < ImageGraph[i].Count; j++)
+                {
+                    /*
+                        node index (i)
+                        ImageGraph[i][j].p
+                        ImageGraph[i][j].w
+                    */
+                }
+            }
         }
        public static double[] shortestReach(int n, List<Edge>[] edges, int s)
         {
