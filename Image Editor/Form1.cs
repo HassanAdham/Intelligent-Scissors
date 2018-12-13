@@ -180,6 +180,11 @@ namespace Image_Editor
                 is_maximized = false;
             }
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

@@ -1,4 +1,3 @@
-F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csprojAssemblyReference.cache
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image_Editor.Form1.resources
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image_Editor.Properties.Resources.resources
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.GenerateResource.cache

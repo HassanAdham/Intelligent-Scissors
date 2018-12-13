@@ -4,6 +4,7 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace Image_Editor
 {
@@ -100,16 +101,17 @@ namespace Image_Editor
             output();
         }
        private static void output()
-        {
-            for (int i = 0; i < ImageGraph.Length; i++)
+       {
+            using (StreamWriter writetext = new StreamWriter("output.txt"))
             {
-                for (int j = 0; j < ImageGraph[i].Count; j++)
+                for (int i = 0; i < ImageGraph.Length; i++)
                 {
-                    /*
-                        node index (i)
-                        ImageGraph[i][j].p
-                        ImageGraph[i][j].w
-                    */
+                    string s = i + "|edges:";
+                    for (int j = 0; j < ImageGraph[i].Count; j++)
+                    {
+                        s += "(" + i + "," + ImageGraph[i][j].p + "," + ImageGraph[i][j].w + ")";        
+                    }
+                    writetext.WriteLine(s);
                 }
             }
         }
