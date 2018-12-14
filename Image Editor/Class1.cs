@@ -13,23 +13,34 @@ namespace Image_Editor
         public int p;
         public double w;
     }
+
+
     public struct Vector2D
     {
         public double X { get; set; }
         public double Y { get; set; }
     }
+
+
     public struct RGBPixel
     {
         public byte red, green, blue;
     }
+
+
     public struct RGBPixelD
     {
         public double red, green, blue;
     }
+
+
     public class ImageOperations
     {
         public static List<Edge>[] ImageGraph;
-
+        // summary:
+        //     takes image and builds graph represents edge-image
+        // complexity:
+        //     theta(width*height)
         public static void BuildGraph(RGBPixel[,] image)
         {
             int width = GetWidth(image);
@@ -101,6 +112,10 @@ namespace Image_Editor
             output();
         }
 
+        // summary:
+        //     creates txt file represents the graph 
+        // complexity:
+        //     theta(width*height)
         private static void output()
         {
             using (StreamWriter writetext = new StreamWriter("output.txt"))
@@ -123,6 +138,7 @@ namespace Image_Editor
             }
         }
 
+
         public static void outputShortestPath(Point[] arr, int source, Point sourcePoint, int destination, Point destintaionPoint)
         {
             using (StreamWriter sw = new StreamWriter("shortestPath.txt"))
@@ -135,16 +151,10 @@ namespace Image_Editor
                 }
             }
         }
+
+
         public static double[] shortestReach(int n, List<Edge>[] edges, int s)
         {
-            //List<List<pair>> l = new List<List<pair>>();
-            //for (int i = 0; i <= n; i++)
-            //    l.Add(new List<pair>());
-            //for (int f = 0; f < edges.Length; f++)
-            //{
-            //    l[edges[f][0]].Add(new pair(edges[f][2], edges[f][1]));
-            //    l[edges[f][1]].Add(new pair(edges[f][2], edges[f][0]));
-            //}
             double[] arr = new double[n + 1];
             for (int i = 0; i <= n; i++)
             {
