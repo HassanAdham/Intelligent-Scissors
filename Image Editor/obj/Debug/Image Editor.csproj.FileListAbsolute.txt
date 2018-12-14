@@ -28,3 +28,6 @@ C:\Users\DINA\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image
 C:\Users\DINA\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.exe
 C:\Users\DINA\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.pdb
 F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csprojAssemblyReference.cache
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.exe.config
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.exe
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.pdb

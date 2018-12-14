@@ -411,50 +411,53 @@ namespace Image_Editor
         }
         public pair getmin()
         {
-            pair x = arr[1];
-            int i = 1;
-            while (i < last)
+            pair x = arr[1],y;
+            last--;
+            if (last != 0)
             {
-                if ((i * 2) + 1 < last)
+                arr[1] = arr[last];
+                int i = 1;
+                while (i < last)
                 {
-                    if (arr[i * 2].first < arr[(i * 2) + 1].first)
+                    if ((i * 2) + 1 < last)
                     {
-                        arr[i] = arr[i * 2];
-                        i *= 2;
+
+                        if (arr[i * 2].first < arr[(i * 2) + 1].first && arr[i * 2].first < arr[i].first)
+                        {
+                            y = arr[i * 2];
+                            arr[i * 2] = arr[i];
+                            arr[i] = y;
+                            i *= 2;
+                        }
+                        else if (arr[i * 2].first >= arr[(i * 2) + 1].first && arr[(i * 2) + 1].first < arr[i].first)
+                        {
+                            y = arr[(i * 2) + 1];
+                            arr[(i * 2) + 1] = arr[i];
+                            arr[i] = y;
+                            i *= 2;
+                            i++;
+                        }
+                        else
+                            break;
+                    }
+                    else if (i*2<last)
+                    {
+                        if (arr[i * 2].first < arr[i].first)
+                        {
+                            y = arr[i * 2];
+                            arr[i * 2] = arr[i];
+                            arr[i] = y;
+                            i *= 2;
+                        }
+                        else
+                            break;
                     }
                     else
                     {
-                        arr[i] = arr[(i * 2) + 1];
-                        i *= 2;
-                        i++;
+                        break;
                     }
-                }
-                else if (i * 2 < last)
-                {
-                    arr[i] = arr[i * 2];
-                    break;
-                }
-                else
-                {
-                    for (; i < last - 1; i++)
-                    {
-                        arr[i] = arr[i + 1];
-                        if (i % 2 == 1)
-                        {
-                            int j = i;
-                            while (j != 1 && arr[j].first < arr[j / 2].first)
-                            {
-                                pair w = arr[j / 2];
-                                arr[j / 2] = arr[j];
-                                arr[j] = w;
-                                j /= 2;
-                            }
-                        }
-                    }
-                    break;
                 }
             }
-            last--;
             return x;
         }
         public bool empty()
