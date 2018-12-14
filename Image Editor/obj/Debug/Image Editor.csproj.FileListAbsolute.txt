@@ -27,4 +27,3 @@ C:\Users\DINA\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image
 C:\Users\DINA\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.CoreCompileInputs.cache
 C:\Users\DINA\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.exe
 C:\Users\DINA\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.pdb
-F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csprojAssemblyReference.cache

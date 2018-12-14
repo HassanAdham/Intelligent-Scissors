@@ -28,27 +28,11 @@ namespace Image_Editor
         Point start;
         bool is_maximized;
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                //Open the browsed image and display it
-                string OpenedFilePath = openFileDialog1.FileName;
-                ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
-                ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
-                ImageOperations.BuildGraph(ImageMatrix);
-                pictureBox1.Controls.Clear();
-                pointNumber = 0;
-            }
-        }
-
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (checkBox1.Checked == true)
+            if (selectTool.Checked == true)
             {
                 pictureBox1_CreateDot(e.Location.X, e.Location.Y);
-
 
                 if (pointNumber == 0)
                 {
@@ -80,24 +64,6 @@ namespace Image_Editor
             }
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            //if(pointNumber >=1)
-            //{
-            //    startPoint = freePoint;
-            //    freePoint = new Point(e.Location.X, e.Location.Y);
-            //    drawLine(startPoint, freePoint, Color.Red, 1);
-            //}
-        }
-
-        private void checkBox1_EnabledChanged(object sender, EventArgs e)
-        {
-            if (checkBox1.Checked)
-                checkBox1.Text = "On";
-            else
-                checkBox1.Text = "Off";
-        }
-
         private void pictureBox1_CreateDot(int x, int y)
         {
             Label l = new Label();
@@ -126,6 +92,7 @@ namespace Image_Editor
             PaintEventArgs p = new PaintEventArgs(g, r);
             p.Graphics.DrawCurve(pen, arr);
         }
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -135,7 +102,6 @@ namespace Image_Editor
                 string OpenedFilePath = openFileDialog1.FileName;
                 ImageMatrix = ImageOperations.OpenImage(OpenedFilePath);
                 ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
-                ImageOperations.BuildGraph(ImageMatrix);
                 pictureBox1.Controls.Clear();
                 pointNumber = 0;
             }
@@ -188,6 +154,19 @@ namespace Image_Editor
         private void button1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void selectTool_CheckedChanged(object sender, EventArgs e)
+        {
+            if(selectTool.Checked == true)
+            {
+                ImageOperations.BuildGraph(ImageMatrix);
+            }
         }
     }
 

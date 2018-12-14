@@ -63,29 +63,9 @@ namespace Image_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Untitled_2 {
+        internal static System.Drawing.Bitmap Interface_Tools_Vol__1_48_512 {
             get {
-                object obj = ResourceManager.GetObject("Untitled-2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Untitled_21 {
-            get {
-                object obj = ResourceManager.GetObject("Untitled-21", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Untitled_22 {
-            get {
-                object obj = ResourceManager.GetObject("Untitled-22", resourceCulture);
+                object obj = ResourceManager.GetObject("Interface_Tools_Vol._1-48-512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +93,9 @@ namespace Image_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Untitled_4 {
+        internal static System.Drawing.Bitmap Untitled_42 {
             get {
-                object obj = ResourceManager.GetObject("Untitled-4", resourceCulture);
+                object obj = ResourceManager.GetObject("Untitled-42", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

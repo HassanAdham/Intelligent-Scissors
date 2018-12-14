@@ -40,84 +40,81 @@ namespace Image_Editor
             {
                 ImageGraph[k] = new List<Edge>();
             }
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    if (i != height - 1 && j != width - 1)
-                    {
-                        temp = CalculatePixelEnergies(j, i, image);
-                        Edge e = new Edge();
-                        e.p = i * width + j + 1;
-                        e.w = 1 / temp.X;
-                        ImageGraph[i * width + j].Add(e);
-                        e.p = (i + 1) * width + j;
-                        e.w = 1 / temp.Y;
-                        ImageGraph[i * width + j].Add(e);
-                        e.p = i * width + j;
-                        e.w = 1 / temp.X;
-                        ImageGraph[i * width + j + 1].Add(e);
-                        e.p = i * width + j;
-                        e.w = 1 / temp.Y;
-                        ImageGraph[(i + 1) * width + j].Add(e);
-                    }
-                    else if (i == height - 1 && j != width - 1)
-                    {
-                        temp = CalculatePixelEnergies(j, i, image);
-                        Edge e = new Edge();
-                        e.p = i * width + j + 1;
-                        e.w = 1 / temp.X;
-                        ImageGraph[i * width + j].Add(e);
-                        e.p = i * width + j;
-                        e.w = 1 / temp.X;
-                        ImageGraph[i * width + j + 1].Add(e);
-                    }
-                    else if (i != height - 1 && j == width - 1)
-                    {
-                        temp = CalculatePixelEnergies(j, i, image);
-                        Edge e = new Edge();
-                        e.p = (i + 1) * width + j;
-                        e.w = 1 / temp.Y;
-                        ImageGraph[i * width + j].Add(e);
-                        e.p = i * width + j;
-                        e.w = 1 / temp.Y;
-                        ImageGraph[(i + 1) * width + j].Add(e);
-                    }
-                    else if (i == height - 1 && j == width - 1)
-                    {
-                        temp = CalculatePixelEnergies(j, i-1, image);
-                        Edge e = new Edge();
-                        e.p = (i-1) * width + j;
-                        e.w = 1 / temp.Y;
-                        ImageGraph[i * width + j].Add(e);
-                        temp = CalculatePixelEnergies(j-1, i, image);
-                        e.p = i * width + j-1;
-                        e.w = 1 / temp.X;
-                        ImageGraph[i  * width + j].Add(e);
-                    }
-
-                }
-            }
-            output();
-        }
-       private static void output()
-       {
             using (StreamWriter writetext = new StreamWriter("output.txt"))
             {
-                for (int i = 0; i < ImageGraph.Length; i++)
+                for (int i = 0; i < height; i++)
                 {
                     string s = i + "|edges:";
-                    for (int j = 0; j < ImageGraph[i].Count; j++)
+                    for (int j = 0; j < width; j++)
                     {
-                        if( ImageGraph[i][j].w==  double.PositiveInfinity)
-                            s += "(" + i + "," + ImageGraph[i][j].p + "," + 1E+16 + ")";
-                        else
-                            s += "(" + i + "," + ImageGraph[i][j].p + "," + ImageGraph[i][j].w + ")";        
+                        if (i != height - 1 && j != width - 1)
+                        {
+                            temp = CalculatePixelEnergies(j, i, image);
+                            Edge e = new Edge();
+                            e.p = i * width + j + 1;
+                            e.w = 1 / temp.X;
+                            ImageGraph[i * width + j].Add(e);
+                            e.p = (i + 1) * width + j;
+                            e.w = 1 / temp.Y;
+                            ImageGraph[i * width + j].Add(e);
+                            e.p = i * width + j;
+                            e.w = 1 / temp.X;
+                            ImageGraph[i * width + j + 1].Add(e);
+                            e.p = i * width + j;
+                            e.w = 1 / temp.Y;
+                            ImageGraph[(i + 1) * width + j].Add(e);
+                        }
+                        else if (i == height - 1 && j != width - 1)
+                        {
+                            temp = CalculatePixelEnergies(j, i, image);
+                            Edge e = new Edge();
+                            e.p = i * width + j + 1;
+                            e.w = 1 / temp.X;
+                            ImageGraph[i * width + j].Add(e);
+                            e.p = i * width + j;
+                            e.w = 1 / temp.X;
+                            ImageGraph[i * width + j + 1].Add(e);
+                        }
+                        else if (i != height - 1 && j == width - 1)
+                        {
+                            temp = CalculatePixelEnergies(j, i, image);
+                            Edge e = new Edge();
+                            e.p = (i + 1) * width + j;
+                            e.w = 1 / temp.Y;
+                            ImageGraph[i * width + j].Add(e);
+                            e.p = i * width + j;
+                            e.w = 1 / temp.Y;
+                            ImageGraph[(i + 1) * width + j].Add(e);
+                        }
+                        else if (i == height - 1 && j == width - 1)
+                        {
+                            temp = CalculatePixelEnergies(j, i - 1, image);
+                            Edge e = new Edge();
+                            e.p = (i - 1) * width + j;
+                            e.w = 1 / temp.Y;
+                            ImageGraph[i * width + j].Add(e);
+                            temp = CalculatePixelEnergies(j - 1, i, image);
+                            e.p = i * width + j - 1;
+                            e.w = 1 / temp.X;
+                            ImageGraph[i * width + j].Add(e);
+                        }
+                        s += output(ImageGraph[i][j].w,i,j);
                     }
                     writetext.WriteLine(s);
                 }
             }
         }
+
+        private static string output(double weight, int i, int j)
+        {
+            string s;
+            if (weight == double.PositiveInfinity)
+                s = "(" + i + "," + ImageGraph[i][j].p + "," + 1E+16 + ")";
+            else
+                s = "(" + i + "," + ImageGraph[i][j].p + "," + ImageGraph[i][j].w + ")";
+            return s;
+        }
+
         public static void outputShortestPath(Point[] arr, int source, Point sourcePoint, int destination, Point destintaionPoint)
         {
             using (StreamWriter sw = new StreamWriter("shortestPath.txt"))
