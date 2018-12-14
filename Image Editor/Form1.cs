@@ -103,6 +103,8 @@ namespace Image_Editor
                 pictureBox1.Controls.Clear();
                 pointNumber = 0;
                 selectTool.Enabled = true;
+                pictureBox1.Width = pictureBox1.Image.Width;
+                pictureBox1.Height = pictureBox1.Image.Height;
             }
         }
         private void ExitButton_Click(object sender, EventArgs e)
