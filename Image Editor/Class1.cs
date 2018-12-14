@@ -82,18 +82,6 @@ namespace Image_Editor
                         e.w = 1 / temp.Y;
                         ImageGraph[(i + 1) * width + j].Add(e);
                     }
-                    else if (i == height - 1 && j == width - 1)//Current node is in right bottom corner
-                    {                                          //i.e node doesn't have bottom nor right nodes.
-                        temp = CalculatePixelEnergies(j, i - 1, image);
-                        Edge e = new Edge();
-                        e.p = (i - 1) * width + j;
-                        e.w = 1 / temp.Y;
-                        ImageGraph[i * width + j].Add(e);
-                        temp = CalculatePixelEnergies(j - 1, i, image);
-                        e.p = i * width + j - 1;
-                        e.w = 1 / temp.X;
-                        ImageGraph[i * width + j].Add(e);
-                    }
                 }
             }
         }
