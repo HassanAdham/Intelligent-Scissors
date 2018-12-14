@@ -105,16 +105,19 @@ namespace Image_Editor
         {
             using (StreamWriter writetext = new StreamWriter("output.txt"))
             {
+                string g = "The constructed graph" + Environment.NewLine;
+                writetext.WriteLine(g);
                 for (int i = 0; i < ImageGraph.Length; i++)
                 {
-                    string s = i + "|edges:";
+                    string s = " The  index node" + i + Environment.NewLine + "Edges" + Environment.NewLine;
                     for (int j = 0; j < ImageGraph[i].Count; j++)
                     {
                         if (ImageGraph[i][j].w == double.PositiveInfinity)
-                            s += "(" + i + "," + ImageGraph[i][j].p + "," + 1E+16 + ")";
+                            s += "edge from   " + i + "  To  " + ImageGraph[i][j].p + "  With Weights  " + 1E+16 + Environment.NewLine;
                         else
-                            s += "(" + i + "," + ImageGraph[i][j].p + "," + ImageGraph[i][j].w + ")";
+                            s += "edge from   " + i + "  To  " + ImageGraph[i][j].p + "  With Weights  " + ImageGraph[i][j].w + Environment.NewLine;
                     }
+                    s += Environment.NewLine + Environment.NewLine;
                     writetext.WriteLine(s);                    
                 }
             }
