@@ -104,6 +104,7 @@ namespace Image_Editor
                 ImageOperations.DisplayImage(ImageMatrix, pictureBox1);
                 pictureBox1.Controls.Clear();
                 pointNumber = 0;
+                selectTool.Enabled = true;
             }
         }
 
@@ -158,7 +159,7 @@ namespace Image_Editor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            selectTooltip.SetToolTip(selectTool,"Makes a selection by snapping to image edges");
         }
 
         private void selectTool_CheckedChanged(object sender, EventArgs e)
