@@ -29,24 +29,22 @@ namespace Image_Editor
     public class ImageOperations
     {
         public static List<Edge>[] ImageGraph;
-
-        public static void BuildGraph(RGBPixel[,] image)
+        public static void BuildGraph(RGBPixel[,] image)//O(N^2)
         {
             int width = GetWidth(image);
             int height = GetHeight(image);
             Vector2D temp = new Vector2D();
             ImageGraph = new List<Edge>[width * height];
-            for (int k = 0; k < width * height; k++)
+            for (int k = 0; k < width * height; k++) //O(N^2)
             {
-                ImageGraph[k] = new List<Edge>();
+                ImageGraph[k] = new List<Edge>();//Create a list of edges for each node in the image.
             }
-
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < height; i++)//O(N)
             {
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < width; j++)//O(N)
                 {
-                    if (i != height - 1 && j != width - 1)
-                    {
+                    if (i != height - 1 && j != width - 1)//If node is not in last column nor last row
+                    {                                      //i.e Must have both right and bottom nodes.
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = i * width + j + 1;
@@ -62,8 +60,8 @@ namespace Image_Editor
                         e.w = 1 / temp.Y;
                         ImageGraph[(i + 1) * width + j].Add(e);
                     }
-                    else if (i == height - 1 && j != width - 1)
-                    {
+                    else if (i == height - 1 && j != width - 1)//Current node is in last row but not in last column.
+                    {                                           //i.e Doesn't have bottom node.
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = i * width + j + 1;
@@ -73,8 +71,8 @@ namespace Image_Editor
                         e.w = 1 / temp.X;
                         ImageGraph[i * width + j + 1].Add(e);
                     }
-                    else if (i != height - 1 && j == width - 1)
-                    {
+                    else if (i != height - 1 && j == width - 1)//Current node is in last column but not in last row.
+                    {                                           //i.e Doesn't have right node.
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = (i + 1) * width + j;
@@ -84,8 +82,8 @@ namespace Image_Editor
                         e.w = 1 / temp.Y;
                         ImageGraph[(i + 1) * width + j].Add(e);
                     }
-                    else if (i == height - 1 && j == width - 1)
-                    {
+                    else if (i == height - 1 && j == width - 1)//Current node is in right bottom corner
+                    {                                          //i.e node doesn't have bottom nor right nodes.
                         temp = CalculatePixelEnergies(j, i - 1, image);
                         Edge e = new Edge();
                         e.p = (i - 1) * width + j;
@@ -98,16 +96,67 @@ namespace Image_Editor
                     }
                 }
             }
-            output();
         }
-
-        private static void output()
+        public static double[] shortestReach(int n, List<Edge>[] edges, int s)
+        {
+            /*
+             *  E is the number of edges.
+             *  N is the number of nodes.
+            */
+            double[] arr = new double[n + 1];//Array holds the path value from source to each node.
+            for (int i = 0; i <= n; i++)//O(N)
+            {
+                arr[i] = 1000000000;//Set path value from source to each node as high value.
+            }
+            heap h = new heap(n);
+            h.add(0, s);//Add the source node path value equals 0    O(log(N)).
+            while (!h.empty())//O(E log(N)).
+            {
+                pair x = h.getmin();//Get the minimum value and remove it from the heap.
+                if (arr[x.second] > x.first)//Check if the new path value is better than the one we already have.
+                {
+                    arr[x.second] = (double)x.first;//Update the path value.
+                    for (int i = 0; i < edges[x.second].Count; i++)//Loop over edges connected to the node we have now O(E).
+                    {
+                        if (arr[edges[x.second][i].p] > x.first + edges[x.second][i].w)//Check if the new path value is better than the one we already have.
+                        {
+                            h.add(x.first + edges[x.second][i].w, edges[x.second][i].p);//O(log(N)).
+                        }
+                    }
+                }
+            }
+            return arr;
+        }
+        public static int[] line(int s, int d, double[] arr, List<Edge>[] edges)
+        {
+            List<int> l = new List<int>();//Create list to hold the nodes in the shortest path from source to destination.
+            while (d != s)//Start first time from destination and loop till it equals the source node  O(N).
+            {
+                l.Add(d);
+                for (int i = 0; i < edges[d].Count; i++)//Loop over the connected edges to the node we have now O(E).
+                {
+                    if (arr[d] == arr[edges[d][i].p] + edges[d][i].w)//Check if that node is part of the path from source to destination.
+                    {
+                        d = edges[d][i].p;//Update d with new node and break.
+                        break;
+                    }
+                }
+            }
+            l.Add(s);//Add the source to the list to finish the path.
+            int[] a = new int[l.Count];
+            for (int i = 0; i < a.Length; i++)//O(N)
+            {
+                a[i] = l[i];//Copy the nodes from the list to an array.
+            }
+            return a;
+        }
+        public static void output()//O(N^2).
         {
             using (StreamWriter writetext = new StreamWriter("output.txt"))
             {
                 string g = "The constructed graph" + Environment.NewLine;
                 writetext.WriteLine(g);
-                for (int i = 0; i < ImageGraph.Length; i++)
+                for (int i = 0; i < ImageGraph.Length; i++)//O(N^2).
                 {
                     string s = " The  index node" + i + Environment.NewLine + "Edges" + Environment.NewLine;
                     for (int j = 0; j < ImageGraph[i].Count; j++)
@@ -121,8 +170,7 @@ namespace Image_Editor
                     writetext.WriteLine(s);                    
                 }
             }
-        }
-
+        }//
         public static void outputShortestPath(Point[] arr, int source, Point sourcePoint, int destination, Point destintaionPoint)
         {
             using (StreamWriter sw = new StreamWriter("shortestPath.txt"))
@@ -135,59 +183,8 @@ namespace Image_Editor
                 }
             }
         }
-        public static double[] shortestReach(int n, List<Edge>[] edges, int s)
-        {
-            //
-            //  E is the number of edges
-            //  N is the number of nodes
-            //
-            double[] arr = new double[n + 1];//array holds the path value from source to each node
-            for (int i = 0; i <= n; i++)//O(N)
-            {
-                arr[i] = 1000000000;//set path value from source to each node as high value
-            }
-            heap h = new heap(n);
-            h.add(0, s);//add the source node path value equals 0    O(log(N))
-            while (!h.empty())//O(E log(N))
-            {
-                pair x = h.getmin();//get the minimum value and remove it from the heap
-                if (arr[x.second] > x.first)//check if the new path value is better than the one we already have
-                {
-                    arr[x.second] = (double)x.first;//update the path value
-                    for (int i = 0; i < edges[x.second].Count; i++)//loop over edges connected to the node we have now O(E)
-                    {
-                        if (arr[edges[x.second][i].p] > x.first + edges[x.second][i].w)//check if the new path value is better than the one we already have
-                        {
-                            h.add(x.first + edges[x.second][i].w, edges[x.second][i].p);//O(log(N))
-                        }
-                    }
-                }
-            }
-            return arr;
-        }
-        public static int[] line(int s, int d, double[] arr, List<Edge>[] edges)
-        {
-            List<int> l = new List<int>();// create list to hold the nodes in the shortest path from source to destination
-            while (d != s)//start first time from destination and loop till it equals the source node   O(N)
-            {
-                l.Add(d);
-                for (int i = 0; i < edges[d].Count; i++)//loop over the connected edges to the node we have now O(E)
-                {
-                    if (arr[d] == arr[edges[d][i].p] + edges[d][i].w)//check if that node is part of the path from source to destination
-                    {
-                        d = edges[d][i].p;//update d with new node and break
-                        break;
-                    }
-                }
-            }
-            l.Add(s);//add the source to the list to finish the path 
-            int[] a = new int[l.Count];
-            for (int i = 0; i < a.Length; i++)//O(N)
-            {
-                a[i] = l[i];//copy the nodes from the list to an array
-            }
-            return a;
-        }
+        
+
         public static unsafe RGBPixel[,] OpenImage(string ImagePath)
         {
             Bitmap original_bm = new Bitmap(ImagePath);
@@ -195,8 +192,6 @@ namespace Image_Editor
             int Width = original_bm.Width;
 
             RGBPixel[,] Buffer = new RGBPixel[Height, Width];
-
-
             {
                 BitmapData bmd = original_bm.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.ReadWrite, original_bm.PixelFormat);
                 int x, y;
@@ -248,7 +243,6 @@ namespace Image_Editor
             return Buffer;
 
         }
-
         /// <summary>
         /// Calculate edge energy between
         ///     1. the given pixel and its right one (X)
@@ -330,7 +324,6 @@ namespace Image_Editor
         {
             return ImageMatrix.GetLength(0);
         }
-
         /// <summary>
         /// Get the width of the image 
         /// </summary>
@@ -340,7 +333,6 @@ namespace Image_Editor
         {
             return ImageMatrix.GetLength(1);
         }
-
         public static unsafe void DisplayImage(RGBPixel[,] ImageMatrix, PictureBox PicBox)
         {
             // Create Image:
@@ -387,14 +379,14 @@ namespace Image_Editor
         {
             if (last == 0)
                 last++;
-            if (last == size)//check if the array size can have anymore elements or not
+            if (last == size)//Check if the array size can have anymore elements or not.
             {
-                Array.Resize(ref arr, arr.Length * 2);//double the size of the array 
-                size = arr.Length;//set the size varialbe to the new size of the array
+                Array.Resize(ref arr, arr.Length * 2);//Double the size of the array.
+                size = arr.Length;//Set the size varialbe to the new size of the array.
             }
-            arr[last] = new pair(a, b);//put the new element after the last element in the array
+            arr[last] = new pair(a, b);//Put the new element after the last element in the array.
             int i = last;
-            while (i != 1 && arr[i].first < arr[i / 2].first)//compare the new element with it's parent and swap them to keep it minimum tree O(log(N))
+            while (i != 1 && arr[i].first < arr[i / 2].first)//Compare the new element with it's parent and swap them to keep it minimum tree O(log(N)).
             {
                 pair x = arr[i / 2];
                 arr[i / 2] = arr[i];
@@ -407,15 +399,15 @@ namespace Image_Editor
         {
             pair x = arr[1],y;
             last--;
-            if (last != 0)//update the tree if it still have any elements
+            if (last != 0)//Update the tree if it still have any elements.
             {
-                arr[1] = arr[last];//put the last element in the first place
+                arr[1] = arr[last];//Put the last element in the first place.
                 int i = 1;
-                while (i < last)//update the i-th element with it's childs O(log(N))
+                while (i < last)//Update the i-th element with it's childs O(log(N)).
                 {
-                    //finding minimum between i and it's childs to update the tree
+                    //Finding minimum between i and it's childs to update the tree.
 
-                    if ((i * 2) + 1 < last)//check if valid right and left childs
+                    if ((i * 2) + 1 < last)//Check if valid right and left childs.
                     {
 
                         if (arr[i * 2].first < arr[(i * 2) + 1].first && arr[i * 2].first < arr[i].first)
@@ -436,7 +428,7 @@ namespace Image_Editor
                         else
                             break;
                     }
-                    else if (i*2<last)//check if valid left child
+                    else if (i*2<last)//Check if valid left child.
                     {
                         if (arr[i * 2].first < arr[i].first)
                         {
@@ -448,7 +440,7 @@ namespace Image_Editor
                         else
                             break;
                     }
-                    else//this node has no childs
+                    else//This node has no childs.
                     {
                         break;
                     }

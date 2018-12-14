@@ -12,14 +12,6 @@ namespace Image_Editor
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-            pointNumber = 0;
-            is_menuStripMouseDown = false;
-            is_maximized = true;
-        }
-
         RGBPixel[,] ImageMatrix;
         int pointNumber;
         Point startPoint;
@@ -27,6 +19,14 @@ namespace Image_Editor
         bool is_menuStripMouseDown;
         Point start;
         bool is_maximized;
+
+        public Form1()
+        {
+            InitializeComponent();
+            pointNumber = 0;
+            is_menuStripMouseDown = false;
+            is_maximized = true;
+        }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
@@ -63,7 +63,6 @@ namespace Image_Editor
                 }
             }
         }
-
         private void pictureBox1_CreateDot(int x, int y)
         {
             Label l = new Label();
@@ -72,6 +71,15 @@ namespace Image_Editor
             l.Location = new Point(x, y);
 
             pictureBox1.Controls.Add(l);
+        }
+        private void drawLine(Point[] arr, Color C, int S)//O(N)
+        {
+            Graphics g = pictureBox1.CreateGraphics();
+            Rectangle r = new Rectangle();
+            Pen pen = new Pen(C, S);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            PaintEventArgs p = new PaintEventArgs(g, r);
+            p.Graphics.DrawCurve(pen, arr); //O(N)
         }
 
         private void drawLine(Point p1, Point p2, Color C, int S)
@@ -83,16 +91,6 @@ namespace Image_Editor
             blackPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             p.Graphics.DrawLine(blackPen, p1, p2);
         }
-        private void drawLine(Point [] arr, Color C, int S)
-        {
-            Graphics g = pictureBox1.CreateGraphics();
-            Rectangle r = new Rectangle();
-            Pen pen = new Pen(C, S);
-            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            PaintEventArgs p = new PaintEventArgs(g, r);
-            p.Graphics.DrawCurve(pen, arr);
-        }
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -107,18 +105,15 @@ namespace Image_Editor
                 selectTool.Enabled = true;
             }
         }
-
         private void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
         private void menuStrip1_MouseDown(object sender, MouseEventArgs e)
         {
             is_menuStripMouseDown = true;
             start = new Point(e.X, e.Y);
         }
-
         private void menuStrip1_MouseMove(object sender, MouseEventArgs e)
         {
             if (is_menuStripMouseDown)
@@ -127,17 +122,14 @@ namespace Image_Editor
                 this.Location = new Point(p.X - start.X, p.Y - start.Y);
             }
         }
-
         private void menuStrip1_MouseUp(object sender, MouseEventArgs e)
         {
             is_menuStripMouseDown = false;
         }
-
         private void button3_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             if (is_maximized == false)
@@ -151,22 +143,16 @@ namespace Image_Editor
                 is_maximized = false;
             }
         }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             selectTooltip.SetToolTip(selectTool,"Makes a selection by snapping to image edges");
         }
-
         private void selectTool_CheckedChanged(object sender, EventArgs e)
         {
             if(selectTool.Checked == true)
             {
                 ImageOperations.BuildGraph(ImageMatrix);
+                ImageOperations.output();
             }
         }
     }
