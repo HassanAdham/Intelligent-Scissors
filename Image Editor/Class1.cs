@@ -137,32 +137,28 @@ namespace Image_Editor
         }
         public static double[] shortestReach(int n, List<Edge>[] edges, int s)
         {
-            //List<List<pair>> l = new List<List<pair>>();
-            //for (int i = 0; i <= n; i++)
-            //    l.Add(new List<pair>());
-            //for (int f = 0; f < edges.Length; f++)
-            //{
-            //    l[edges[f][0]].Add(new pair(edges[f][2], edges[f][1]));
-            //    l[edges[f][1]].Add(new pair(edges[f][2], edges[f][0]));
-            //}
-            double[] arr = new double[n + 1];
-            for (int i = 0; i <= n; i++)
+            //
+            //  E is the number of edges
+            //  N is the number of nodes
+            //
+            double[] arr = new double[n + 1];//array holds the path value from source to each node
+            for (int i = 0; i <= n; i++)//O(N)
             {
-                arr[i] = 1000000000;
+                arr[i] = 1000000000;//set path value from source to each node as high value
             }
             heap h = new heap(n);
-            h.add(0, s);
-            while (!h.empty())
+            h.add(0, s);//add the source node path value equals 0    O(log(N))
+            while (!h.empty())//O(E log(N))
             {
-                pair x = h.getmin();
-                if (arr[x.second] > x.first)
+                pair x = h.getmin();//get the minimum value and remove it from the heap
+                if (arr[x.second] > x.first)//check if the new path value is better than the one we already have
                 {
-                    arr[x.second] = (double)x.first;
-                    for (int i = 0; i < edges[x.second].Count; i++)
+                    arr[x.second] = (double)x.first;//update the path value
+                    for (int i = 0; i < edges[x.second].Count; i++)//loop over edges connected to the node we have now O(E)
                     {
-                        if (arr[edges[x.second][i].p] > x.first + edges[x.second][i].w)
+                        if (arr[edges[x.second][i].p] > x.first + edges[x.second][i].w)//check if the new path value is better than the one we already have
                         {
-                            h.add(x.first + edges[x.second][i].w, edges[x.second][i].p);
+                            h.add(x.first + edges[x.second][i].w, edges[x.second][i].p);//O(log(N))
                         }
                     }
                 }
@@ -171,26 +167,24 @@ namespace Image_Editor
         }
         public static int[] line(int s, int d, double[] arr, List<Edge>[] edges)
         {
-            List<int> l = new List<int>();
-            double p = arr[d];
-            while (d != s)
+            List<int> l = new List<int>();// create list to hold the nodes in the shortest path from source to destination
+            while (d != s)//start first time from destination and loop till it equals the source node   O(N)
             {
                 l.Add(d);
-                for (int i = 0; i < edges[d].Count; i++)
+                for (int i = 0; i < edges[d].Count; i++)//loop over the connected edges to the node we have now O(E)
                 {
-                    if (arr[d] == arr[edges[d][i].p] + edges[d][i].w)
+                    if (arr[d] == arr[edges[d][i].p] + edges[d][i].w)//check if that node is part of the path from source to destination
                     {
-                        p -= edges[d][i].w;
-                        d = edges[d][i].p;
+                        d = edges[d][i].p;//update d with new node and break
                         break;
                     }
                 }
             }
-            l.Add(s);
+            l.Add(s);//add the source to the list to finish the path 
             int[] a = new int[l.Count];
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Length; i++)//O(N)
             {
-                a[i] = l[i];
+                a[i] = l[i];//copy the nodes from the list to an array
             }
             return a;
         }
@@ -393,14 +387,14 @@ namespace Image_Editor
         {
             if (last == 0)
                 last++;
-            if (last == size)
+            if (last == size)//check if the array size can have anymore elements or not
             {
-                Array.Resize(ref arr, arr.Length * 2);
-                size = arr.Length;
+                Array.Resize(ref arr, arr.Length * 2);//double the size of the array 
+                size = arr.Length;//set the size varialbe to the new size of the array
             }
-            arr[last] = new pair(a, b);
+            arr[last] = new pair(a, b);//put the new element after the last element in the array
             int i = last;
-            while (i != 1 && arr[i].first < arr[i / 2].first)
+            while (i != 1 && arr[i].first < arr[i / 2].first)//compare the new element with it's parent and swap them to keep it minimum tree O(log(N))
             {
                 pair x = arr[i / 2];
                 arr[i / 2] = arr[i];
@@ -413,13 +407,15 @@ namespace Image_Editor
         {
             pair x = arr[1],y;
             last--;
-            if (last != 0)
+            if (last != 0)//update the tree if it still have any elements
             {
-                arr[1] = arr[last];
+                arr[1] = arr[last];//put the last element in the first place
                 int i = 1;
-                while (i < last)
+                while (i < last)//update the i-th element with it's childs O(log(N))
                 {
-                    if ((i * 2) + 1 < last)
+                    //finding minimum between i and it's childs to update the tree
+
+                    if ((i * 2) + 1 < last)//check if valid right and left childs
                     {
 
                         if (arr[i * 2].first < arr[(i * 2) + 1].first && arr[i * 2].first < arr[i].first)
@@ -440,7 +436,7 @@ namespace Image_Editor
                         else
                             break;
                     }
-                    else if (i*2<last)
+                    else if (i*2<last)//check if valid left child
                     {
                         if (arr[i * 2].first < arr[i].first)
                         {
@@ -452,7 +448,7 @@ namespace Image_Editor
                         else
                             break;
                     }
-                    else
+                    else//this node has no childs
                     {
                         break;
                     }
