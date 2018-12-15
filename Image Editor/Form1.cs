@@ -155,6 +155,7 @@ namespace Image_Editor
             {
                 ImageOperations.BuildGraph(ImageMatrix);
                 ImageOperations.output();
+               
             }
         }
     }

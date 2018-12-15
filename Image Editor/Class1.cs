@@ -48,16 +48,28 @@ namespace Image_Editor
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = i * width + j + 1;
-                        e.w = 1 / temp.X;
+                        if (1 / temp.X == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.X;
                         ImageGraph[i * width + j].Add(e);
                         e.p = (i + 1) * width + j;
-                        e.w = 1 / temp.Y;
+                        if (1 / temp.Y == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.Y;
                         ImageGraph[i * width + j].Add(e);
                         e.p = i * width + j;
-                        e.w = 1 / temp.X;
+                        if (1 / temp.X == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.X;
                         ImageGraph[i * width + j + 1].Add(e);
                         e.p = i * width + j;
-                        e.w = 1 / temp.Y;
+                        if (1 / temp.Y == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.Y;
                         ImageGraph[(i + 1) * width + j].Add(e);
                     }
                     else if (i == height - 1 && j != width - 1)//Current node is in last row but not in last column.
@@ -65,10 +77,16 @@ namespace Image_Editor
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = i * width + j + 1;
-                        e.w = 1 / temp.X;
+                        if (1 / temp.X == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.X;
                         ImageGraph[i * width + j].Add(e);
                         e.p = i * width + j;
-                        e.w = 1 / temp.X;
+                        if (1 / temp.X == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.X;
                         ImageGraph[i * width + j + 1].Add(e);
                     }
                     else if (i != height - 1 && j == width - 1)//Current node is in last column but not in last row.
@@ -76,10 +94,16 @@ namespace Image_Editor
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = (i + 1) * width + j;
-                        e.w = 1 / temp.Y;
+                        if (1 / temp.Y == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.Y;
                         ImageGraph[i * width + j].Add(e);
                         e.p = i * width + j;
-                        e.w = 1 / temp.Y;
+                        if (1 / temp.Y == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.Y;
                         ImageGraph[(i + 1) * width + j].Add(e);
                     }
                 }
@@ -94,7 +118,7 @@ namespace Image_Editor
             double[] arr = new double[n + 1];//Array holds the path value from source to each node.
             for (int i = 0; i <= n; i++)//O(N)
             {
-                arr[i] = 1000000000;//Set path value from source to each node as high value.
+                arr[i] = 1E+16;//Set path value from source to each node as high value.
             }
             heap h = new heap(n);
             h.add(0, s);//Add the source node path value equals 0    O(log(N)).
@@ -161,6 +185,7 @@ namespace Image_Editor
         }//
         public static void outputShortestPath(Point[] arr, int source, Point sourcePoint, int destination, Point destintaionPoint)
         {
+            int c = 0;
             using (StreamWriter sw = new StreamWriter("shortestPath.txt"))
             {
                 sw.WriteLine(" The Shortest path from Node  " + source + "at position   " + sourcePoint.X + "  " + sourcePoint.Y);
@@ -168,7 +193,9 @@ namespace Image_Editor
                 for (int i = arr.Length - 1; i >= 0; i--)
                 {
                     sw.WriteLine("Node  " + arr[i] + " at position x " + arr[i].X + " at position y   " + arr[i].Y);
+                    c++;
                 }
+                sw.WriteLine(c);
             }
         }
         
