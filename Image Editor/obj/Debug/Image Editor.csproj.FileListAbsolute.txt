@@ -29,3 +29,9 @@ E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.G
 E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.CoreCompileInputs.cache
 E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.exe
 E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.pdb
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.exe
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\bin\Debug\Image Editor.pdb
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csprojResolveAssemblyReference.cache
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image_Editor.Form1.resources
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image_Editor.Properties.Resources.resources
+C:\Users\Abdullah\Documents\GitHub\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.GenerateResource.Cache

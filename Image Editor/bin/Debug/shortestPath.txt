@@ -1,0 +1,10 @@
+ The Shortest path from Node  17at position   6  1
+ The Shortest path to Node  35at position   2  3
+Node  {X=6,Y=1} at position x 6 at position y   1
+Node  {X=6,Y=2} at position x 6 at position y   2
+Node  {X=5,Y=2} at position x 5 at position y   2
+Node  {X=4,Y=2} at position x 4 at position y   2
+Node  {X=3,Y=2} at position x 3 at position y   2
+Node  {X=3,Y=3} at position x 3 at position y   3
+Node  {X=2,Y=3} at position x 2 at position y   3
+7

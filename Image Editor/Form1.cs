@@ -46,12 +46,11 @@ namespace Image_Editor
                 {
                     startPoint = freePoint;
                     freePoint = new Point(e.Location.X, e.Location.Y);
-
                     int N = ImageOperations.GetWidth(ImageMatrix) * ImageOperations.GetHeight(ImageMatrix);
                     int S = ImageOperations.GetWidth(ImageMatrix) * startPoint.Y + startPoint.X;
                     int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
-                    double[] arr= ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
-                    int []  arr1 = ImageOperations.line(S, d, arr, ImageOperations.ImageGraph);
+                    int[] arr= ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
+                    int []  arr1 = ImageOperations.line(d, arr);
                     Point[] points = new Point[arr1.Length];
                     for(int i = 0; i < arr1.Length; i++)
                     {
