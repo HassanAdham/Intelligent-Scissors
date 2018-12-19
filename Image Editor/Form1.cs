@@ -15,10 +15,14 @@ namespace Image_Editor
         RGBPixel[,] ImageMatrix;
         int pointNumber;
         Point startPoint;
+        Point firstPoint;
         Point freePoint;
+        Label firstdot;
+        int[] firstarr;
         bool is_menuStripMouseDown;
         Point start;
         bool is_maximized;
+
 
         public Form1()
         {
@@ -36,10 +40,10 @@ namespace Image_Editor
 
                 if (pointNumber == 0)
                 {
-                    pointNumber++;
                     startPoint = new Point(e.Location.X, e.Location.Y);
-                    freePoint = new Point(e.Location.X, e.Location.Y);
+                    //freePoint = new Point(e.Location.X, e.Location.Y);
                     freePoint = startPoint;
+                    firstPoint = startPoint;
 
                 }
                 else if (pointNumber >= 1)
@@ -50,6 +54,8 @@ namespace Image_Editor
                     int S = ImageOperations.GetWidth(ImageMatrix) * startPoint.Y + startPoint.X;
                     int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
                     int[] arr= ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
+                    if (pointNumber == 1)
+                        firstarr = arr;
                     int []  arr1 = ImageOperations.line(d, arr);
                     Point[] points = new Point[arr1.Length];
                     for(int i = 0; i < arr1.Length; i++)
@@ -60,14 +66,34 @@ namespace Image_Editor
                     ImageOperations.outputShortestPath(points, S, startPoint, d, freePoint);
                     drawLine(points, Color.Red, 1);
                 }
+                pointNumber++;
             }
+        }
+        private void firstdot_Click(object sender, System.EventArgs e)
+        {
+            int S = ImageOperations.GetWidth(ImageMatrix) * firstPoint.Y + firstPoint.X;
+            int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
+            int[] arr1 = ImageOperations.line(d, firstarr);
+            Point[] points = new Point[arr1.Length];
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                points[i].X = arr1[i] % ImageOperations.GetWidth(ImageMatrix);
+                points[i].Y = arr1[i] / ImageOperations.GetWidth(ImageMatrix);
+            }
+            ImageOperations.outputShortestPath(points, S, startPoint, d, freePoint);
+            drawLine(points, Color.Red, 1);
         }
         private void pictureBox1_CreateDot(int x, int y)
         {
             Label l = new Label();
-            l.Size = new Size(3, 3);
+            l.Size = new Size(4, 4);
             l.BackColor = Color.Blue;
             l.Location = new Point(x, y);
+            if (pointNumber == 0)
+            {
+                firstdot = l;
+                firstdot.Click += new EventHandler(firstdot_Click);
+            }
 
             pictureBox1.Controls.Add(l);
         }
