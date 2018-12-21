@@ -38,13 +38,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.MagSelectTool = new System.Windows.Forms.RadioButton();
             this.selectTool = new System.Windows.Forms.RadioButton();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.selectTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.MagSelectTool = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -109,6 +109,14 @@
             resources.ApplyResources(this.panel4, "panel4");
             this.panel4.Name = "panel4";
             // 
+            // MagSelectTool
+            // 
+            resources.ApplyResources(this.MagSelectTool, "MagSelectTool");
+            this.MagSelectTool.Name = "MagSelectTool";
+            this.MagSelectTool.TabStop = true;
+            this.MagSelectTool.UseVisualStyleBackColor = true;
+            this.MagSelectTool.CheckedChanged += new System.EventHandler(this.MagSelectTool_CheckedChanged);
+            // 
             // selectTool
             // 
             resources.ApplyResources(this.selectTool, "selectTool");
@@ -170,13 +178,6 @@
             this.selectTooltip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(212)))), ((int)(((byte)(212)))));
             this.selectTooltip.ForeColor = System.Drawing.Color.Black;
             this.selectTooltip.ToolTipTitle = "Magnatic Lasso Tool";
-            // 
-            // MagSelectTool
-            // 
-            resources.ApplyResources(this.MagSelectTool, "MagSelectTool");
-            this.MagSelectTool.Name = "MagSelectTool";
-            this.MagSelectTool.TabStop = true;
-            this.MagSelectTool.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
