@@ -69,6 +69,15 @@ namespace Image_Editor
                 pointNumber++;
             }
         }
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (pointNumber >= 1)
+            {
+                startPoint = freePoint;
+                freePoint = new Point(e.Location.X, e.Location.Y);
+                drawLine(startPoint, freePoint, Color.Red, 1);
+            }
+        }
         private void firstdot_Click(object sender, System.EventArgs e)
         {
             int S = ImageOperations.GetWidth(ImageMatrix) * firstPoint.Y + firstPoint.X;
