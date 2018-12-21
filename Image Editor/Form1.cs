@@ -108,6 +108,8 @@ namespace Image_Editor
         private void firstdot_Click(object sender, System.EventArgs e)
         {
             int S = ImageOperations.GetWidth(ImageMatrix) * firstPoint.Y + firstPoint.X;
+            if (MagSelectTool.Checked == true)
+                freePoint = startPoint;
             int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
             int[] arr1 = ImageOperations.line(d, firstarr);
             Point[] points = new Point[arr1.Length];
@@ -118,6 +120,7 @@ namespace Image_Editor
             }
             ImageOperations.outputShortestPath(points, S, startPoint, d, freePoint);
             drawLine(points, Color.Red, 1);
+            MagSelectTool.Checked = false;
         }
         private void pictureBox1_CreateDot(int x, int y)
         {
