@@ -44,6 +44,7 @@
             this.ExitButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.selectTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.MagSelectTool = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -103,6 +104,7 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.panel4.Controls.Add(this.MagSelectTool);
             this.panel4.Controls.Add(this.selectTool);
             resources.ApplyResources(this.panel4, "panel4");
             this.panel4.Name = "panel4";
@@ -169,6 +171,13 @@
             this.selectTooltip.ForeColor = System.Drawing.Color.Black;
             this.selectTooltip.ToolTipTitle = "Magnatic Lasso Tool";
             // 
+            // MagSelectTool
+            // 
+            resources.ApplyResources(this.MagSelectTool, "MagSelectTool");
+            this.MagSelectTool.Name = "MagSelectTool";
+            this.MagSelectTool.TabStop = true;
+            this.MagSelectTool.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -208,6 +217,7 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.RadioButton selectTool;
         private System.Windows.Forms.ToolTip selectTooltip;
+        private System.Windows.Forms.RadioButton MagSelectTool;
     }
 }
 
