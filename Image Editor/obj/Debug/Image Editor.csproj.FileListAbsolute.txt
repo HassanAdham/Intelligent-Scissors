@@ -36,3 +36,4 @@ E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.G
 E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csproj.CoreCompileInputs.cache
 E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.exe
 E:\Hazem Hazem\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.pdb
+F:\FCIS\Projects\Intelligent Scissors\Intelligent-Scissors\Image Editor\obj\Debug\Image Editor.csprojAssemblyReference.cache

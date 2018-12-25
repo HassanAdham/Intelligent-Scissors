@@ -167,6 +167,7 @@ namespace Image_Editor
                 pictureBox1.Controls.Clear();
                 pointNumber = 0;
                 selectTool.Enabled = true;
+                MagSelectTool.Enabled = true;
                 pictureBox1.Width = pictureBox1.Image.Width;
                 pictureBox1.Height = pictureBox1.Image.Height;
             }
@@ -231,6 +232,11 @@ namespace Image_Editor
                 ImageOperations.output();
 
             }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
