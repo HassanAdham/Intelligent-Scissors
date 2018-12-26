@@ -170,7 +170,9 @@ namespace Image_Editor
                 MagSelectTool.Enabled = true;
                 pictureBox1.Width = pictureBox1.Image.Width;
                 pictureBox1.Height = pictureBox1.Image.Height;
+                ImageOperations.BuildGraph(ImageMatrix);
             }
+
         }
         private void ExitButton_Click(object sender, EventArgs e)
         {
@@ -218,7 +220,6 @@ namespace Image_Editor
         {
             if(selectTool.Checked == true)
             {
-                ImageOperations.BuildGraph(ImageMatrix);
                 ImageOperations.output();
                
             }
@@ -228,7 +229,6 @@ namespace Image_Editor
         {
             if (MagSelectTool.Checked == true)
             {
-                ImageOperations.BuildGraph(ImageMatrix);
                 ImageOperations.output();
 
             }
