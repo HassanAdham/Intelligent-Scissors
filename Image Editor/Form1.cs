@@ -100,7 +100,6 @@ namespace Image_Editor
                         drawLine(points, Color.Red, 1);
                         pointNumber++;
                     }
-                   // drawLine(startPoint, freePoint, Color.Red, 1);
                 }
             }
             
