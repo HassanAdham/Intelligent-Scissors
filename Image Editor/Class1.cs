@@ -119,7 +119,7 @@ namespace Image_Editor
             int[] pa = new int[n + 1];
             for (int i = 0; i <= n; i++)//O(N)
             {
-                arr[i] = 1E+18;//Set path value from source to each node as high value.
+                arr[i] = 1.7E308;//Set path value from source to each node as high value.
                 pa[i] = -1;
             }
             heap h = new heap(n);

@@ -1,0 +1,4 @@
+ The Shortest path from Node  2480at position   80  24
+ The Shortest path to Node  2480at position   80  24
+Node  {X=80,Y=24} at position x 80 at position y   24
+1
