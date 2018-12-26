@@ -38,14 +38,17 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.selectTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.MagSelectTool = new System.Windows.Forms.RadioButton();
             this.selectTool = new System.Windows.Forms.RadioButton();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.selectTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,9 +106,43 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(83)))), ((int)(((byte)(83)))));
+            this.panel4.Controls.Add(this.MagSelectTool);
             this.panel4.Controls.Add(this.selectTool);
             resources.ApplyResources(this.panel4, "panel4");
             this.panel4.Name = "panel4";
+            // 
+            // selectTooltip
+            // 
+            this.selectTooltip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(212)))), ((int)(((byte)(212)))));
+            this.selectTooltip.ForeColor = System.Drawing.Color.Black;
+            this.selectTooltip.ToolTipTitle = "Magnatic Lasso Tool";
+            // 
+            // panel3
+            // 
+            resources.ApplyResources(this.panel3, "panel3");
+            this.panel3.Controls.Add(this.pictureBox1);
+            this.panel3.Name = "panel3";
+            // 
+            // pictureBox1
+            // 
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            // 
+            // MagSelectTool
+            // 
+            resources.ApplyResources(this.MagSelectTool, "MagSelectTool");
+            this.MagSelectTool.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.MagSelectTool.FlatAppearance.BorderSize = 0;
+            this.MagSelectTool.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
+            this.MagSelectTool.Image = global::Image_Editor.Properties.Resources.Interface_Tools_Vol__1_48_512;
+            this.MagSelectTool.Name = "MagSelectTool";
+            this.MagSelectTool.TabStop = true;
+            this.MagSelectTool.UseVisualStyleBackColor = true;
+            this.MagSelectTool.CheckedChanged += new System.EventHandler(this.MagSelectTool_CheckedChanged);
             // 
             // selectTool
             // 
@@ -113,7 +150,7 @@
             this.selectTool.Cursor = System.Windows.Forms.Cursors.Hand;
             this.selectTool.FlatAppearance.BorderSize = 0;
             this.selectTool.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
-            this.selectTool.Image = global::Image_Editor.Properties.Resources.Interface_Tools_Vol__1_48_512;
+            this.selectTool.Image = global::Image_Editor.Properties.Resources.Interface_Tools_Vol1;
             this.selectTool.Name = "selectTool";
             this.selectTool.TabStop = true;
             this.selectTool.UseVisualStyleBackColor = true;
@@ -155,31 +192,18 @@
             this.ExitButton.UseVisualStyleBackColor = false;
             this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
-            // pictureBox1
-            // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
-            // 
-            // selectTooltip
-            // 
-            this.selectTooltip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(212)))), ((int)(((byte)(212)))));
-            this.selectTooltip.ForeColor = System.Drawing.Color.Black;
-            this.selectTooltip.ToolTipTitle = "Magnatic Lasso Tool";
-            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.ExitButton);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
@@ -187,6 +211,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel4.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -207,6 +233,8 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.RadioButton selectTool;
         private System.Windows.Forms.ToolTip selectTooltip;
+        private System.Windows.Forms.RadioButton MagSelectTool;
+        private System.Windows.Forms.Panel panel3;
     }
 }
 

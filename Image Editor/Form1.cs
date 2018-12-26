@@ -15,10 +15,14 @@ namespace Image_Editor
         RGBPixel[,] ImageMatrix;
         int pointNumber;
         Point startPoint;
+        Point firstPoint;
         Point freePoint;
+        Label firstdot;
+        int[] firstarr;
         bool is_menuStripMouseDown;
         Point start;
         bool is_maximized;
+
 
         public Form1()
         {
@@ -30,28 +34,29 @@ namespace Image_Editor
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (selectTool.Checked == true)
+            if (selectTool.Checked == true|| MagSelectTool.Checked == true)
             {
                 pictureBox1_CreateDot(e.Location.X, e.Location.Y);
 
                 if (pointNumber == 0)
                 {
-                    pointNumber++;
                     startPoint = new Point(e.Location.X, e.Location.Y);
-                    freePoint = new Point(e.Location.X, e.Location.Y);
+                    //freePoint = new Point(e.Location.X, e.Location.Y);
                     freePoint = startPoint;
+                    firstPoint = startPoint;
 
                 }
                 else if (pointNumber >= 1)
                 {
                     startPoint = freePoint;
                     freePoint = new Point(e.Location.X, e.Location.Y);
-
                     int N = ImageOperations.GetWidth(ImageMatrix) * ImageOperations.GetHeight(ImageMatrix);
                     int S = ImageOperations.GetWidth(ImageMatrix) * startPoint.Y + startPoint.X;
                     int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
-                    double[] arr= ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
-                    int []  arr1 = ImageOperations.line(S, d, arr, ImageOperations.ImageGraph);
+                    int[] arr= ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
+                    if (pointNumber == 1)
+                        firstarr = arr;
+                    int []  arr1 = ImageOperations.line(d, arr);
                     Point[] points = new Point[arr1.Length];
                     for(int i = 0; i < arr1.Length; i++)
                     {
@@ -61,14 +66,73 @@ namespace Image_Editor
                     ImageOperations.outputShortestPath(points, S, startPoint, d, freePoint);
                     drawLine(points, Color.Red, 1);
                 }
+                pointNumber++;
             }
+        }
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (MagSelectTool.Checked == true)
+            {
+                if (pointNumber >= 1)
+                {
+                    freePoint = new Point(e.Location.X, e.Location.Y);
+                    double X = Math.Sqrt(Math.Pow(freePoint.X - startPoint.X, 2) + Math.Pow(freePoint.Y - startPoint.Y, 2));
+                    if (X >= 60)
+                    {
+                        int N = ImageOperations.GetWidth(ImageMatrix) * ImageOperations.GetHeight(ImageMatrix);
+                        int S = ImageOperations.GetWidth(ImageMatrix) * startPoint.Y + startPoint.X;
+                        int[] arr = ImageOperations.shortestReach(N, ImageOperations.ImageGraph, S);
+                        int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
+                        if (pointNumber == 1)
+                            firstarr = arr;
+                        int[] arr1 = ImageOperations.line(d, arr);
+                        Point[] points = new Point[arr1.Length/2];
+                        int j = arr1.Length - 1;
+                        for (int i = 0; i < points.Length; i++)
+                        {
+                            points[i].X = arr1[j] % ImageOperations.GetWidth(ImageMatrix);
+                            points[i].Y = arr1[j] / ImageOperations.GetWidth(ImageMatrix);
+                            if (i == points.Length - 1)
+                                startPoint = points[i];
+                            j--;
+                        }
+                        pictureBox1_CreateDot(startPoint.X, startPoint.Y);
+                        drawLine(points, Color.Red, 1);
+                        pointNumber++;
+                    }
+                   // drawLine(startPoint, freePoint, Color.Red, 1);
+                }
+            }
+            
+        }
+        private void firstdot_Click(object sender, System.EventArgs e)
+        {
+            int S = ImageOperations.GetWidth(ImageMatrix) * firstPoint.Y + firstPoint.X;
+            if (MagSelectTool.Checked == true)
+                freePoint = startPoint;
+            int d = ImageOperations.GetWidth(ImageMatrix) * freePoint.Y + freePoint.X;
+            int[] arr1 = ImageOperations.line(d, firstarr);
+            Point[] points = new Point[arr1.Length];
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                points[i].X = arr1[i] % ImageOperations.GetWidth(ImageMatrix);
+                points[i].Y = arr1[i] / ImageOperations.GetWidth(ImageMatrix);
+            }
+            ImageOperations.outputShortestPath(points, S, startPoint, d, freePoint);
+            drawLine(points, Color.Red, 1);
+            MagSelectTool.Checked = false;
         }
         private void pictureBox1_CreateDot(int x, int y)
         {
             Label l = new Label();
-            l.Size = new Size(3, 3);
+            l.Size = new Size(4, 4);
             l.BackColor = Color.Blue;
             l.Location = new Point(x, y);
+            if (pointNumber == 0)
+            {
+                firstdot = l;
+                firstdot.Click += new EventHandler(firstdot_Click);
+            }
 
             pictureBox1.Controls.Add(l);
         }
@@ -103,8 +167,10 @@ namespace Image_Editor
                 pictureBox1.Controls.Clear();
                 pointNumber = 0;
                 selectTool.Enabled = true;
+                MagSelectTool.Enabled = true;
                 pictureBox1.Width = pictureBox1.Image.Width;
                 pictureBox1.Height = pictureBox1.Image.Height;
+                ImageOperations.BuildGraph(ImageMatrix);
             }
         }
         private void ExitButton_Click(object sender, EventArgs e)
@@ -153,9 +219,23 @@ namespace Image_Editor
         {
             if(selectTool.Checked == true)
             {
-                ImageOperations.BuildGraph(ImageMatrix);
                 ImageOperations.output();
+               
             }
+        }
+
+        private void MagSelectTool_CheckedChanged(object sender, EventArgs e)
+        {
+            if (MagSelectTool.Checked == true)
+            {
+                ImageOperations.output();
+
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

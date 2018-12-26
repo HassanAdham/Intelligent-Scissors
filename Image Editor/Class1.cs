@@ -48,16 +48,28 @@ namespace Image_Editor
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = i * width + j + 1;
-                        e.w = 1 / temp.X;
+                        if (1 / temp.X == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.X;
                         ImageGraph[i * width + j].Add(e);
                         e.p = (i + 1) * width + j;
-                        e.w = 1 / temp.Y;
+                        if (1 / temp.Y == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.Y;
                         ImageGraph[i * width + j].Add(e);
                         e.p = i * width + j;
-                        e.w = 1 / temp.X;
+                        if (1 / temp.X == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.X;
                         ImageGraph[i * width + j + 1].Add(e);
                         e.p = i * width + j;
-                        e.w = 1 / temp.Y;
+                        if (1 / temp.Y == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.Y;
                         ImageGraph[(i + 1) * width + j].Add(e);
                     }
                     else if (i == height - 1 && j != width - 1)//Current node is in last row but not in last column.
@@ -65,10 +77,16 @@ namespace Image_Editor
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = i * width + j + 1;
-                        e.w = 1 / temp.X;
+                        if (1 / temp.X == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.X;
                         ImageGraph[i * width + j].Add(e);
                         e.p = i * width + j;
-                        e.w = 1 / temp.X;
+                        if (1 / temp.X == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.X;
                         ImageGraph[i * width + j + 1].Add(e);
                     }
                     else if (i != height - 1 && j == width - 1)//Current node is in last column but not in last row.
@@ -76,61 +94,63 @@ namespace Image_Editor
                         temp = CalculatePixelEnergies(j, i, image);
                         Edge e = new Edge();
                         e.p = (i + 1) * width + j;
-                        e.w = 1 / temp.Y;
+                        if (1 / temp.Y == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.Y;
                         ImageGraph[i * width + j].Add(e);
                         e.p = i * width + j;
-                        e.w = 1 / temp.Y;
+                        if (1 / temp.Y == double.PositiveInfinity)
+                            e.w = 1E+16;
+                        else
+                            e.w = 1 / temp.Y;
                         ImageGraph[(i + 1) * width + j].Add(e);
                     }
                 }
             }
         }
-        public static double[] shortestReach(int n, List<Edge>[] edges, int s)
+        public static int[] shortestReach(int n, List<Edge>[] edges, int s)
         {
             /*
              *  E is the number of edges.
              *  N is the number of nodes.
             */
             double[] arr = new double[n + 1];//Array holds the path value from source to each node.
+            int[] pa = new int[n + 1];
             for (int i = 0; i <= n; i++)//O(N)
             {
-                arr[i] = 1000000000;//Set path value from source to each node as high value.
+                arr[i] = 1.7E308;//Set path value from source to each node as high value.
+                pa[i] = -1;
             }
             heap h = new heap(n);
-            h.add(0, s);//Add the source node path value equals 0    O(log(N)).
+            h.add(0,s,s);//Add the source node path value equals 0    O(log(N)).
             while (!h.empty())//O(E log(N)).
             {
                 pair x = h.getmin();//Get the minimum value and remove it from the heap.
                 if (arr[x.second] > x.first)//Check if the new path value is better than the one we already have.
                 {
-                    arr[x.second] = (double)x.first;//Update the path value.
+                    arr[x.second] = x.first;//Update the path value.
+                    pa[x.second] = x.p;
                     for (int i = 0; i < edges[x.second].Count; i++)//Loop over edges connected to the node we have now O(E).
                     {
                         if (arr[edges[x.second][i].p] > x.first + edges[x.second][i].w)//Check if the new path value is better than the one we already have.
                         {
-                            h.add(x.first + edges[x.second][i].w, edges[x.second][i].p);//O(log(N)).
+                            h.add(x.first + edges[x.second][i].w, edges[x.second][i].p,x.second);//O(log(N)).
                         }
                     }
                 }
             }
-            return arr;
+            return pa;
         }
-        public static int[] line(int s, int d, double[] arr, List<Edge>[] edges)
+        public static int[] line(int d,int []par)
         {
             List<int> l = new List<int>();//Create list to hold the nodes in the shortest path from source to destination.
-            while (d != s)//Start first time from destination and loop till it equals the source node  O(N).
+            while (d != par[d])//Start first time from destination and loop till it equals the source node  O(N).
             {
                 l.Add(d);
-                for (int i = 0; i < edges[d].Count; i++)//Loop over the connected edges to the node we have now O(E).
-                {
-                    if (arr[d] == arr[edges[d][i].p] + edges[d][i].w)//Check if that node is part of the path from source to destination.
-                    {
-                        d = edges[d][i].p;//Update d with new node and break.
-                        break;
-                    }
-                }
+                d = par[d];
             }
-            l.Add(s);//Add the source to the list to finish the path.
+            l.Add(d);
             int[] a = new int[l.Count];
             for (int i = 0; i < a.Length; i++)//O(N)
             {
@@ -161,6 +181,7 @@ namespace Image_Editor
         }//
         public static void outputShortestPath(Point[] arr, int source, Point sourcePoint, int destination, Point destintaionPoint)
         {
+            int c = 0;
             using (StreamWriter sw = new StreamWriter("shortestPath.txt"))
             {
                 sw.WriteLine(" The Shortest path from Node  " + source + "at position   " + sourcePoint.X + "  " + sourcePoint.Y);
@@ -168,7 +189,9 @@ namespace Image_Editor
                 for (int i = arr.Length - 1; i >= 0; i--)
                 {
                     sw.WriteLine("Node  " + arr[i] + " at position x " + arr[i].X + " at position y   " + arr[i].Y);
+                    c++;
                 }
+                sw.WriteLine(c);
             }
         }
         
@@ -363,7 +386,7 @@ namespace Image_Editor
             size = n;
             last = 1;
         }
-        public void add(double a, int b)
+        public void add(double a, int b,int c)
         {
             if (last == 0)
                 last++;
@@ -372,7 +395,7 @@ namespace Image_Editor
                 Array.Resize(ref arr, arr.Length * 2);//Double the size of the array.
                 size = arr.Length;//Set the size varialbe to the new size of the array.
             }
-            arr[last] = new pair(a, b);//Put the new element after the last element in the array.
+            arr[last] = new pair(a, b, c);//Put the new element after the last element in the array.
             int i = last;
             while (i != 1 && arr[i].first < arr[i / 2].first)//Compare the new element with it's parent and swap them to keep it minimum tree O(log(N)).
             {
@@ -446,11 +469,12 @@ namespace Image_Editor
     class pair
     {
         public double first;
-        public int second;
-        public pair(double a, int b)
+        public int second,p;
+        public pair(double a, int b,int c)
         {
             first = a;
             second = b;
+            p = c;
         }
     }
 }

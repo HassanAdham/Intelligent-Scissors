@@ -63,9 +63,39 @@ namespace Image_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap aaa {
+            get {
+                object obj = ResourceManager.GetObject("aaa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap asdads {
+            get {
+                object obj = ResourceManager.GetObject("asdads", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Interface_Tools_Vol__1_48_512 {
             get {
                 object obj = ResourceManager.GetObject("Interface_Tools_Vol._1-48-512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Interface_Tools_Vol1 {
+            get {
+                object obj = ResourceManager.GetObject("Interface_Tools_Vol1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -96,6 +126,26 @@ namespace Image_Editor.Properties {
         internal static System.Drawing.Bitmap Untitled_42 {
             get {
                 object obj = ResourceManager.GetObject("Untitled-42", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap v_ui_tools_starter_pack_line_07_512 {
+            get {
+                object obj = ResourceManager.GetObject("v-ui-tools-starter-pack-line-07-512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap v_ui_tools_starter_pack_line_07_5121 {
+            get {
+                object obj = ResourceManager.GetObject("v-ui-tools-starter-pack-line-07-5121", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

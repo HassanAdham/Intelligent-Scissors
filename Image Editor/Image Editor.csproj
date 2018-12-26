@@ -94,5 +94,20 @@
   <ItemGroup>
     <None Include="Resources\Interface_Tools_Vol._1-48-512.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\v-ui-tools-starter-pack-line-07-512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\asdads.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\aaa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\v-ui-tools-starter-pack-line-07-5121.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Interface_Tools_Vol._1-48-5121.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
